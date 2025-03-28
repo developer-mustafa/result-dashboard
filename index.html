@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Performance Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body.dark {
+            background-color: #1a202c;
+            color: #f4f4f4;
+        }
+        .dark .bg-white { background-color: #2d3748 !important; }
+        .dark .text-gray-900 { color: #f4f4f4 !important; }
+        .dark input, .dark select, .dark button { background-color: #4a5568 !important; color: white !important; }
+        .dark .bg-gray-200 { background-color: #4a5568 !important; }
+        @media print {
+            #darkModeToggle, .hidden-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900 transition-all duration-300">
+    
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white p-4 flex justify-between">
+        <h1 class="text-xl font-bold">📊 Student Performance Tracker</h1>
+        <button id="darkModeToggle" class="px-4 py-2 bg-gray-800 rounded">🌙 Dark Mode</button>
+    </nav>
+
+    <!-- Dashboard -->
+    <div class="container mx-auto p-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+            <!-- Navigation Panel -->
+            <div class="bg-white p-4 shadow rounded">
+                <h2 class="text-lg font-semibold">📁 Dashboard</h2>
+                <button onclick="showSection('addStudentSection')" class="block w-full mt-2 p-2 bg-blue-500 text-white rounded">➕ Add Student</button>
+                <button onclick="showSection('addExamSection')" class="block w-full mt-2 p-2 bg-blue-500 text-white rounded">📝 Add Exam</button>
+                <button onclick="showSection('viewStudentsSection')" class="block w-full mt-2 p-2 bg-blue-500 text-white rounded">👨‍🎓 View Students</button>
+                <button onclick="showSection('viewResultsSection')" class="block w-full mt-2 p-2 bg-blue-500 text-white rounded">📄 View Results</button>
+            </div>
+
+            <!-- Sections -->
+            <div class="col-span-2 bg-white p-4 shadow rounded">
+                <div id="dynamicContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
