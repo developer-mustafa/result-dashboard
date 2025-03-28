@@ -1,4 +1,6 @@
 
+
+
 document.addEventListener("DOMContentLoaded", () => {
     const dynamicContent = document.getElementById("dynamicContent");
     let students = JSON.parse(localStorage.getItem("students")) || [];
@@ -20,8 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.showSection = function (sectionId) {
         const sections = {
-            dashboard: `<h2 class='text-xl font-semibold'>📁 Dashboard</h2>`
-                + `<p>Welcome to Student Management System</p>`,
+            dashboard: `<h2 class='text-xl font-semibold'>📁 Dashboard</h2><p>Welcome to Student Management System</p>`,
             addStudentSection: `
                 <h2 class="text-xl font-semibold">➕ Add Student</h2>
                 <input type="text" id="studentId" placeholder="Student ID" class="w-full p-2 border rounded mt-2">
@@ -30,7 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
             `,
             addExamSection: `
                 <h2 class="text-xl font-semibold">📝 Add Exam</h2>
-                <input type="text" id="examStudentId" placeholder="Student ID" class="w-full p-2 border rounded mt-2">
+                <select id="examStudentId" class="w-full p-2 border rounded mt-2">
+                    <option value="">Select Student</option>
+                    ${students.map(student => `<option value="${student.id}">${student.name}</option>`).join("")}
+                </select>
                 <input type="text" id="examName" placeholder="Exam Name" class="w-full p-2 border rounded mt-2">
                 <input type="number" id="obtainedMarks" placeholder="Obtained Marks" class="w-full p-2 border rounded mt-2">
                 <input type="number" id="totalMarks" placeholder="Total Marks" class="w-full p-2 border rounded mt-2">
@@ -99,16 +103,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    window.printStudentReport = function (studentId) {
-        const studentExams = exams.filter(exam => exam.studentId === studentId);
-        let reportContent = `<h1>Report Card - ${studentId}</h1>`;
-        studentExams.forEach(exam => {
-            reportContent += `<p>${exam.examName}: ${exam.percentage}%</p>`;
-        });
-        let newWindow = window.open("", "", "width=800, height=600");
-        newWindow.document.write(reportContent);
-        newWindow.print();
-    };
+    document.getElementById("darkModeToggle").addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+        localStorage.setItem("darkMode", document.body.classList.contains("dark") ? "enabled" : "disabled");
+    });
+
+    if (localStorage.getItem("darkMode") === "enabled") {
+        document.body.classList.add("dark");
+    }
 
     showSection("dashboard");
 });
